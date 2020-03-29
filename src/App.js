@@ -1,10 +1,17 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Particles from 'react-particles-js';
+import Clarifai from 'clarifai';
+import FaceRecognition from './components/FaceRecognition/FaceRecognition';
 import Navigation from './components/Navigation/Navigation';
 import Logo from './components/Logo/Logo';
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
 import Rank from './components/Rank/Rank';
 import './App.css';
+
+
+const app = new Clarifai.App({
+  apiKey: '6f44191d531140ceb02d1b54ab54d560'
+});
 
 const particlesOptions = {
   particles: {
@@ -18,26 +25,81 @@ const particlesOptions = {
   }  
 }
 
-function App() {
-  return (
-    <div className="App">
-      <Particles
-        className='particles'
-        params={particlesOptions}
-      />
-      
-      <div className='fl w-30'>
-        <Logo />
+class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      input: '',
+      imageUrl: '',
+      box: {}
+    }
+  }
+
+  calculateFaceLocation = (bounding_box) => {
+    const clarifaiFace = bounding_box;
+    const image = document.getElementById('inputimage');
+    const width = Number(image.width);
+    const height = Number(image.height);
+    return {
+      leftCol: clarifaiFace.left_col * width,
+      topRow: clarifaiFace.top_row * height,
+      rightCol: width - (clarifaiFace.right_col * width),
+      bottomRow: height - (clarifaiFace.bottom_row * height)
+    }
+  }
+
+  displayFaceBox = (box) => {
+    this.setState({box: box});
+    console.log(this.state.box);
+  }
+
+  onInputChange = (event) => {
+    console.log(event.target.value);
+    this.setState({input: event.target.value})
+  }
+
+  onButtonSubmit = () => {
+    this.setState({imageUrl: this.state.input});
+    app.models.predict(
+      Clarifai.DEMOGRAPHICS_MODEL, 
+      this.state.input
+      )
+      .then(response => {
+        console.log(response.outputs[0].data.regions);
+        response.outputs[0].data.regions.forEach(element => {
+          console.log(element.region_info);
+          this.displayFaceBox(this.calculateFaceLocation(element.region_info))
+        });
+        }
+      )
+      .catch(err => console.log(err));
+  }
+  render() {
+    return (
+      <div className="App">
+        <Particles
+          className='particles'
+          params={particlesOptions}
+        />
+        <div className='fl w-30'>
+          <Logo />
+        </div>
+          <div className='fl w-70'>
+        <Navigation /> 
+        </div>
+        
+        {/* <Rank /> */}
+        <ImageLinkForm 
+        onInputChange={this.onInputChange} 
+        onButtonSubmit={this.onButtonSubmit}
+        />
+        {/* <FaceRecognition 
+          box = {this.state.box}
+          imageUrl={this.state.imageUrl}
+        /> */}
       </div>
-        <div className='fl w-70'>
-      <Navigation /> 
-      </div>
-      
-      <Rank />
-      <ImageLinkForm />
-      {/* <FaceRecognition />*/}
-    </div>
-  );
+    );
+  }
 }
 
 export default App;
