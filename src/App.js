@@ -5,7 +5,7 @@ import FaceRecognition from './components/FaceRecognition/FaceRecognition';
 import Navigation from './components/Navigation/Navigation';
 import Logo from './components/Logo/Logo';
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
-import Rank from './components/Rank/Rank';
+// import Rank from './components/Rank/Rank';
 import './App.css';
 
 
@@ -31,7 +31,11 @@ class App extends Component {
     this.state = {
       input: '',
       imageUrl: '',
-      box: {}
+      box: {},
+      bounding: [],
+      age:'',
+      gender: '',
+      multicultural: ''
     }
   }
 
@@ -50,7 +54,6 @@ class App extends Component {
 
   displayFaceBox = (box) => {
     this.setState({box: box});
-    console.log(this.state.box);
   }
 
   onInputChange = (event) => {
@@ -58,18 +61,33 @@ class App extends Component {
     this.setState({input: event.target.value})
   }
 
+  pushArray = (array) => {
+    let temp = {};
+    array.forEach(element => {
+      temp.push(element)
+      console.log(temp)
+    })
+    return temp;
+  }
+
   onButtonSubmit = () => {
     this.setState({imageUrl: this.state.input});
-    app.models.predict(
+    app.models
+    .predict(
       Clarifai.DEMOGRAPHICS_MODEL, 
       this.state.input
-      )
+    )
       .then(response => {
-        console.log(response.outputs[0].data.regions);
-        response.outputs[0].data.regions.forEach(element => {
-          console.log(element.region_info);
-          this.displayFaceBox(this.calculateFaceLocation(element.region_info))
+        this.setState({bounding: response.outputs[0].data.regions})
+        // this.setState({gender: gender.push(bounding[0].data.face.gender.concepts[0])})
+        this.state.bounding.forEach(function (element, i) {
+          console.log(element.region_info.bounding_box, i); 
+          console.log(element.data.face.gender_appearance.concepts[0].name)
+          console.log(element.data.face.gender_appearance.concepts[0].value*100 + "%")
         });
+        // console.log(this.state.gender);
+        // this.displayFaceBox(this.calculateFaceLocation(temp[1]))
+        console.log(this.state.bounding);
         }
       )
       .catch(err => console.log(err));
@@ -87,16 +105,15 @@ class App extends Component {
           <div className='fl w-70'>
         <Navigation /> 
         </div>
-        
         {/* <Rank /> */}
         <ImageLinkForm 
         onInputChange={this.onInputChange} 
         onButtonSubmit={this.onButtonSubmit}
         />
-        {/* <FaceRecognition 
-          box = {this.state.box}
+        <FaceRecognition 
+          bounding={this.state.bounding}
           imageUrl={this.state.imageUrl}
-        /> */}
+        />
       </div>
     );
   }
