@@ -31,30 +31,10 @@ class App extends Component {
     this.state = {
       input: '',
       imageUrl: '',
-      box: {},
-      bounding: [],
-      age:'',
-      gender: '',
-      multicultural: ''
+      prediction: []
     }
   }
 
-  calculateFaceLocation = (bounding_box) => {
-    const clarifaiFace = bounding_box;
-    const image = document.getElementById('inputimage');
-    const width = Number(image.width);
-    const height = Number(image.height);
-    return {
-      leftCol: clarifaiFace.left_col * width,
-      topRow: clarifaiFace.top_row * height,
-      rightCol: width - (clarifaiFace.right_col * width),
-      bottomRow: height - (clarifaiFace.bottom_row * height)
-    }
-  }
-
-  displayFaceBox = (box) => {
-    this.setState({box: box});
-  }
 
   onInputChange = (event) => {
     console.log(event.target.value);
@@ -78,16 +58,15 @@ class App extends Component {
       this.state.input
     )
       .then(response => {
-        this.setState({bounding: response.outputs[0].data.regions})
+        this.setState({prediction: response.outputs[0].data.regions})
         // this.setState({gender: gender.push(bounding[0].data.face.gender.concepts[0])})
-        this.state.bounding.forEach(function (element, i) {
-          console.log(element.region_info.bounding_box, i); 
+        this.state.prediction.forEach(function (element, i) {
           console.log(element.data.face.gender_appearance.concepts[0].name)
-          console.log(element.data.face.gender_appearance.concepts[0].value*100 + "%")
+          console.log(element.data.face.gender_appearance.concepts[0].value*100)
         });
         // console.log(this.state.gender);
         // this.displayFaceBox(this.calculateFaceLocation(temp[1]))
-        console.log(this.state.bounding);
+        console.log(this.state.prediction);
         }
       )
       .catch(err => console.log(err));
@@ -111,7 +90,7 @@ class App extends Component {
         onButtonSubmit={this.onButtonSubmit}
         />
         <FaceRecognition 
-          bounding={this.state.bounding}
+          prediction={this.state.prediction}
           imageUrl={this.state.imageUrl}
         />
       </div>
@@ -120,3 +99,22 @@ class App extends Component {
 }
 
 export default App;
+
+
+// old codes
+  // calculateFaceLocation = (bounding_box) => {
+  //   const clarifaiFace = bounding_box;
+  //   const image = document.getElementById('inputimage');
+  //   const width = Number(image.width);
+  //   const height = Number(image.height);
+  //   return {
+  //     leftCol: clarifaiFace.left_col * width,
+  //     topRow: clarifaiFace.top_row * height,
+  //     rightCol: width - (clarifaiFace.right_col * width),
+  //     bottomRow: height - (clarifaiFace.bottom_row * height)
+  //   }
+  // }
+
+  // displayFaceBox = (box) => {
+  //   this.setState({box: box});
+  // }

@@ -1,21 +1,19 @@
 import React from 'react';
-import './FaceRecongnition.css';
 import Box from '../Bounding_Box/Box.js';
 
 
-const FaceRecognition = ({ imageUrl, bounding }) => {
-  console.log("we are here")
+const FaceRecognition = ({ imageUrl, prediction }) => {
   return (
     <div className='center ma'> 
       <div className='absolute ma2'>
         <img id='inputimage' alt='' src={imageUrl} width='500px' height='auto' />
         <div>
         {
-          bounding.map((box,i) => {
+          prediction.map((eachPerson,i) => {
             return (
-              console.log(box.region_info.bounding_box),
+              console.log(eachPerson),
               <Box 
-                bounding_box={box.region_info.bounding_box}
+                prediction_data={eachPerson}
               />
             );
           }) 

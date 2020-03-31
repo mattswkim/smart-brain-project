@@ -9,3 +9,39 @@
   justify-content: center;
   cursor: pointer;
 }
+
+.bounding-box-concepts {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translateY(-100%);
+}
+
+.bounding-box__concept {
+  background: #21669198;
+  color: #fff;
+  white-space: nowrap;
+  font-size: 0.75rem;
+  line-height: 0.75rem;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: baseline;
+  align-items: baseline;
+  font-weight: 700;
+  padding: 1px 3px;
+  border-radius: 2px 2px 0 0;
+}
+.concept__prediction-val {
+  color: #fff;
+  font-size: 0.625rem;
+  margin-left: 0.5rem;
+}
+
+.concept__name {
+  color: #fff;
+}
+
+.bounding-box.dim{
+  opacity: 0.1;
+  transition: 0.1s ease-in;
+}
