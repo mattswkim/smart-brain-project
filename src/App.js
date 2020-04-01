@@ -3,6 +3,7 @@ import Particles from 'react-particles-js';
 import Clarifai from 'clarifai';
 import FaceRecognition from './components/FaceRecognition/FaceRecognition';
 import Navigation from './components/Navigation/Navigation';
+import Signin from './components/Signin/Signin';
 import Logo from './components/Logo/Logo';
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
 // import Rank from './components/Rank/Rank';
@@ -31,7 +32,8 @@ class App extends Component {
     this.state = {
       input: '',
       imageUrl: '',
-      prediction: []
+      prediction: [],
+      route: 'signin'
     }
   }
 
@@ -39,15 +41,6 @@ class App extends Component {
   onInputChange = (event) => {
     console.log(event.target.value);
     this.setState({input: event.target.value})
-  }
-
-  pushArray = (array) => {
-    let temp = {};
-    array.forEach(element => {
-      temp.push(element)
-      console.log(temp)
-    })
-    return temp;
   }
 
   onButtonSubmit = () => {
@@ -71,6 +64,11 @@ class App extends Component {
       )
       .catch(err => console.log(err));
   }
+
+  onRouteChange = ( ) => {
+    this.setState({route: 'home'});
+  }
+
   render() {
     return (
       <div className="App">
@@ -82,17 +80,24 @@ class App extends Component {
           <Logo />
         </div>
           <div className='fl w-70'>
-        <Navigation /> 
+        <Navigation onRouteChange={this.onRouteChange}/> 
         </div>
-        {/* <Rank /> */}
-        <ImageLinkForm 
-        onInputChange={this.onInputChange} 
-        onButtonSubmit={this.onButtonSubmit}
-        />
-        <FaceRecognition 
-          prediction={this.state.prediction}
-          imageUrl={this.state.imageUrl}
-        />
+        { this.state.route === 'signin'  
+          ?<Signin onRouteChange={this.onRouteChange}/>
+          : <div>
+              {/* <Rank /> */}
+              <ImageLinkForm 
+              onInputChange={this.onInputChange} 
+              onButtonSubmit={this.onButtonSubmit}
+              />
+              <FaceRecognition 
+                prediction={this.state.prediction}
+                imageUrl={this.state.imageUrl}
+              />
+            </div>
+        }
+        
+        
       </div>
     );
   }
