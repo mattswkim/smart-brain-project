@@ -1,14 +1,30 @@
 import React from 'react';
 
-const Navigation = ({ onRouteChange }) => {
-  return (
-    <nav className='ma4 mt0' style={{display: 'flex', justifyContent: 'flex-end'}}>
-      <p 
-      onClick={onRouteChange}
-      className="f4 dim black pa2 pointer"
-      >Sign Out</p>
-    </nav>
-  );
+const Navigation = ({ onRouteChange, isSignedIn }) => {
+  
+    if (isSignedIn) {
+      return (
+      <nav className='ma4 mt0' style={{display: 'flex', justifyContent: 'flex-end'}}>
+        <p 
+        onClick={() => onRouteChange('signout')}
+        className="f4 dim black pa2 pointer"
+        >Sign Out</p>
+      </nav>
+      )
+    } else {
+      return (
+      <nav className='ma4 mt0' style={{display: 'flex', justifyContent: 'flex-end'}}>
+        <p 
+        onClick={() => onRouteChange('signin')}
+        className="f4 dim black pa2 pointer"
+        >Sign In</p>
+        <p 
+        onClick={() => onRouteChange('signup')}
+        className="f4 dim black pa2 pointer"
+        >Sign Up</p>
+      </nav>
+      )
+    }
 }
 
 export default Navigation; 
