@@ -17,6 +17,11 @@
   transform: translateY(-100%);
 }
 
+.bounding-box.dim {
+  opacity: 0.1;
+  transition: 0.1s ease-in;
+}
+
 .bounding-box__concept {
   background: #21669198;
   color: #fff;

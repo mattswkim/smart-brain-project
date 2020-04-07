@@ -3,11 +3,11 @@ import Particles from 'react-particles-js';
 import Clarifai from 'clarifai';
 import FaceRecognition from './components/FaceRecognition/FaceRecognition';
 import Navigation from './components/Navigation/Navigation';
+import Rank from './components/Rank/Rank'
 import Signin from './components/Signin/Signin';
 import Signup from './components/Signup/Signup';
 import Logo from './components/Logo/Logo';
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
-// import Rank from './components/Rank/Rank';
 import './App.css';
 
 
@@ -35,8 +35,26 @@ class App extends Component {
       imageUrl: '',
       prediction: [],
       route: 'signin',
-      isSignedIn: false
+      isSignedIn: false,
+      user: {
+        id: '',
+        name: '',
+        email: '',
+        entries: 0,
+        joined: ''
+      }
     }
+  }
+
+  loadUser = (data) => {
+    this.setState({user: {
+        id: data.id, 
+        name: data.name,
+        email: data.email,
+        entries: data.entries,
+        joined: data.joined
+      }
+    })
   }
 
 
@@ -53,12 +71,25 @@ class App extends Component {
       this.state.input
     )
       .then(response => {
+        if (response) {
+          fetch('http://localhost:3000/image', {
+            method: 'put',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+              id: this.state.user.id
+           })
+          })
+          .then(response => response.json())
+          .then(count => {
+            this.setState(Object.assign(this.state.user, { entries: count }))
+          })
+        }
         this.setState({prediction: response.outputs[0].data.regions})
         // this.setState({gender: gender.push(bounding[0].data.face.gender.concepts[0])})
-        this.state.prediction.forEach(function (element, i) {
-          console.log(element.data.face.gender_appearance.concepts[0].name)
-          console.log(element.data.face.gender_appearance.concepts[0].value*100)
-        });
+        // this.state.prediction.forEach(function (element, i) {
+        //   console.log(element.data.face.gender_appearance.concepts[0].name)
+        //   console.log(element.data.face.gender_appearance.concepts[0].value*100)
+        // });
         // console.log(this.state.gender);
         // this.displayFaceBox(this.calculateFaceLocation(temp[1]))
         console.log(this.state.prediction);
@@ -92,7 +123,9 @@ class App extends Component {
         </div>
         { route === 'home'  
           ? <div>
-              {/* <Rank /> */}
+              <Rank 
+              name={this.state.user.name} 
+              entires={this.state.user.entries} />
               <ImageLinkForm 
               onInputChange={this.onInputChange} 
               onButtonSubmit={this.onButtonSubmit}
@@ -104,8 +137,8 @@ class App extends Component {
             </div>
           : (
             route === 'signin'
-            ? <Signin onRouteChange={this.onRouteChange}/>
-            : <Signup onRouteChange={this.onRouteChange}/>
+            ? <Signin loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
+            : <Signup loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
           )
         }
         
