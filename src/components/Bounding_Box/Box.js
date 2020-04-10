@@ -21,8 +21,10 @@ const Box = ({ prediction_data }) => {
     }>
       <div className='bounding-box-concepts'>
         <div className='bounding-box__concept'>
-          <span className='concept__name'>{prediction_data.data.face.gender_appearance.concepts[0].name}</span>
-          <span className="concept__prediction-val">{Math.round(prediction_data.data.face.gender_appearance.concepts[0].value*10000, 2)/100}%</span>
+          {/* <span className='concept__name'>{prediction_data.data.face.gender_appearance.concepts[0].name}</span>
+          <span className="concept__prediction-val">{Math.round(prediction_data.data.face.gender_appearance.concepts[0].value*10000, 2)/100}%</span> */}
+          <span className='concept__name'>{prediction_data.data.concepts[20].name}</span>
+          <span className="concept__prediction-val">{Math.round(prediction_data.data.concepts[20].value*10000, 2)/100}%</span>
         </div>
       </div>
     </div>

@@ -5,7 +5,7 @@ const ImageLinkForm = ({ onInputChange, onButtonSubmit}) => {
   return (
     <div>
       <p className="f3">
-        {'What Does the AI Think of You? '}
+        {'What Does AI Think of You? '}
       </p>
       <div className='center'>
         <div className='form center pa4 br3 shadow-5'>
@@ -15,7 +15,7 @@ const ImageLinkForm = ({ onInputChange, onButtonSubmit}) => {
          placeholder={'Input photo URL'}
          onChange={onInputChange}/>
           <button 
-          className='w-30 dim f4 link ph3 pv2 dib white bg-light-purple'
+          className='w-30 dim f4 link ph3 pv2 dib white bg-green'
           onClick={onButtonSubmit}
           >Detect</button>
         </div>
