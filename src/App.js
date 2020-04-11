@@ -9,7 +9,7 @@ import Logo from './components/Logo/Logo';
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
 import './App.css';
 
-
+ 
 const particlesOptions = {
   particles: {
     number: {
