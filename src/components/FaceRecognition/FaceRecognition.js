@@ -1,7 +1,6 @@
 import React from 'react';
 import Box from '../Bounding_Box/Box.js';
 
-
 const FaceRecognition = ({ imageUrl, prediction }) => {
   return (
     <div className='center ma'> 
@@ -14,6 +13,7 @@ const FaceRecognition = ({ imageUrl, prediction }) => {
               console.log(eachPerson),
               <Box 
                 prediction_data={eachPerson}
+                index={i}
               />
             );
           }) 
