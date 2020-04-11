@@ -5,13 +5,13 @@ import Modal from 'react-bootstrap/Modal';
 
 const VerticallyCenteredModal = (props) => {
 const real_data = props.predicted_data.data
-  const gender = (props) => {
-    if (real_data.concepts[20].name == "feminine") {
-      return "Female"
-    } else {
-      return "Male"
-    }
-  }
+  // const gender = (props) => {
+  //   if (real_data.concepts[20].name == "feminine") {
+  //     return "Female"
+  //   } else {
+  //     return "Male"
+  //   }
+  // }
   
   return ( 
     
