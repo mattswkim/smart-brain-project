@@ -87,7 +87,6 @@ class Signup extends React.Component {
               type="submit" 
               value="Sign up" 
               />
-
             </div>
           </div>
         </main>

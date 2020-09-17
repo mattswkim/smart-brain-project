@@ -135,8 +135,6 @@ class App extends Component {
             : <Signup loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
           )
         }
-        
-        
       </div>
     );
   }

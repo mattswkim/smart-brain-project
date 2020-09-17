@@ -1,3 +1,15 @@
+## Notice
+This is mostly front-end side of the App.
+This app is now on a free heroku server which makes the response time slower than usual.
+You can try out the demo version here https://artificialbrain.herokuapp.com/
+If you don't want to register here is test ID.
+ID: test@test.com
+PW: test123
+Sample image url (You can try any image with human face)
+https://st2.depositphotos.com/4046139/8549/i/950/depositphotos_85496524-stock-photo-beautiful-diverse-family.jpg
+
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
