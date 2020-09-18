@@ -1,5 +1,5 @@
 ## Notice
-This is mostly front-end side of the App.
+This repo is front-end side of the App.
 This app is now on a free heroku server which makes the response time slower than usual.
 You can try out the demo version here https://artificialbrain.herokuapp.com/
 If you don't want to register here is test ID.
