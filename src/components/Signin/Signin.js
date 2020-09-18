@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-class Signin extends React.Component {
+class Signin extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -18,6 +18,7 @@ class Signin extends React.Component {
   }
 
   onSubmitSignIn = () => {
+    // this.props.isLoading()
     fetch('https://intense-headland-26991.herokuapp.com/signin', {
       method: 'post',
       headers: {'Content-Type': 'application/json'},
@@ -32,7 +33,6 @@ class Signin extends React.Component {
         this.props.onRouteChange('home')
       }
     })
-    
   }
 
   render(){
@@ -46,11 +46,14 @@ class Signin extends React.Component {
               <div className="mt3">
                 <label className="db fw6 lh-copy f6" htmlFor="email-address">Email</label>
                 <input 
+                autoFocus
                 onChange={this.onEmailChange}
                 className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
                 type="email" 
                 name="email-address"  
-                id="email-address" />
+                id="email-address"
+                required
+                />
               </div>
               <div className="mv3">
                 <label className="db fw6 lh-copy f6" htmlFor="password">Password</label>
@@ -60,6 +63,7 @@ class Signin extends React.Component {
                 name="password"  
                 id="password"
                 onChange={this.onPasswordChange}
+                required
                  />
               </div>
             </fieldset>
