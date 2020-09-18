@@ -7,6 +7,8 @@ import Signin from './components/Signin/Signin';
 import Signup from './components/Signup/Signup';
 import Logo from './components/Logo/Logo';
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
+import { css } from "@emotion/core";
+import ClipLoader from "react-spinners/BarLoader";
 import './App.css';
 
  
@@ -33,8 +35,15 @@ const initialState = {
     email: '',
     entries: 0,
     joined: ''
-  }
+  },
+  loading: false
 }
+
+const override = css`
+  display: block;
+  margin: 0 auto;
+  border-color: red;
+`;
 
 class App extends Component {
   constructor() {
@@ -84,25 +93,29 @@ class App extends Component {
           })
           .catch(console.log)
         }
-        console.log(response)
+        // console.log(response)
         this.setState({prediction: response.outputs[0].data.regions})
-        console.log(this.state.prediction);
+        // console.log(this.state.prediction);
         }
       )
       .catch(err => console.log(err));
+  }
+
+  isLoading = () => {
+    this.setState({ loading: true })
   }
 
   onRouteChange = (route) => {
     if (route === 'signout') {
       this.setState(initialState)
     } else if ( route === 'home') {
-      this.setState({isSignedIn: true})
+      this.setState({isSignedIn: true, loading:false})
     }
     this.setState({route: route});
   }
 
   render() {
-    const { isSignedIn, imageUrl, route, prediction } = this.state;
+    const { isSignedIn, imageUrl, route, prediction, loading } = this.state;
     return (
       <div className="App">
         <Particles
@@ -115,7 +128,18 @@ class App extends Component {
           <div className='fl w-70'>
         <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange}/> 
         </div>
-        { route === 'home'  
+        { loading
+        ?
+        <div className="sweet-loading">
+          <ClipLoader
+            css={override}
+            height={15}
+            width={350}
+            color={"rgb(20,20,20)"}
+          />
+        </div>
+        :(
+          route === 'home'  
           ? <div>
               <Rank 
               name={this.state.user.name} 
@@ -131,9 +155,10 @@ class App extends Component {
             </div>
           : (
             route === 'signin'
-            ? <Signin loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
-            : <Signup loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
+            ? <Signin loadUser={this.loadUser} onRouteChange={this.onRouteChange} isLoading={this.isLoading}/>
+            : <Signup loadUser={this.loadUser} onRouteChange={this.onRouteChange} isLoading={this.isLoading}/>
           )
+        )
         }
       </div>
     );
