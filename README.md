@@ -1,16 +1,20 @@
 ## Notice
-This repo is front-end side of the App.<br>
-This app is now on a free heroku server which makes the response time slower than usual.
+This app is now on a free heroku server which caused the response time <strong>slower</strong> than usual.
 You can try out the demo version here https://artificialbrain.herokuapp.com/
 <br>If you don't want to register, here is a test ID.
-<br>ID: test@test.com
-<br>PW: test123
+<br>ID: cs50@harvard.edu
+<br>PW: cs50123
 <br>Sample image url (You can try any image with human face)
 https://st2.depositphotos.com/4046139/8549/i/950/depositphotos_85496524-stock-photo-beautiful-diverse-family.jpg
 
 
+## Computer Vision powered by Clarifai
+Aritificial Brain can predict age, gender, and multicultural appearance for each detected face based on facial characteristics.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+
+This project was bootstrapped and inspired with/by [smart-brain](https://github.com/aneagoie/smart-brain) and [Create React App](https://github.com/facebook/create-react-app).
+
 
 ## Available Scripts
 
@@ -49,32 +53,3 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify

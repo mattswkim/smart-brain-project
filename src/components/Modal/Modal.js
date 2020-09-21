@@ -1,8 +1,6 @@
 import React from 'react'
 import Modal from 'react-bootstrap/Modal';
 
-
-
 const VerticallyCenteredModal = (props) => {
 const real_data = props.predicted_data.data
   // const gender = (props) => {
@@ -34,7 +32,7 @@ const real_data = props.predicted_data.data
         </Modal.Title> */}
       </Modal.Header>
       <Modal.Body>
-        <h5>Data&nbsp;&nbsp;Accuracy</h5>
+        <h5>Demographics</h5>
         <h6>Gender: </h6>
         <span>{real_data.concepts[20].name} ({Math.round(real_data.concepts[20].value*10000, 2)/100}%)<br/></span>
         <br/><h6>Age:</h6>
